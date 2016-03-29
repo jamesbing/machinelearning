@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
+# @author james.
+# This file is the core algorightm of ID3, which is a decision tree in machinelearning algorightme
 from numpy import *
 import math
 import copy

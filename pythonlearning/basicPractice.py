@@ -38,3 +38,10 @@ print tupleOne
 print numberOne
 print tupleTwo
 print stringOne
+
+#一个有关tuple的小trick，就是一个貌似可变的tuple
+changebleTuple=('a','b',['A','B'])
+print changebleTuple
+changebleTuple[2][0]='C'
+changebleTuple[2][1]='D'
+print changebleTuple

@@ -106,3 +106,20 @@ print testDic[1.0]
 print '''
 从上面的三行代码可以看出，在字典中，1和1.0索引的是同一个位置的数据
 '''
+print '''
+字典有以下几种定义方式，它们的结果是相同的：
+a = dict(one = 1, two = 2, three = 3
+b = {'one':1, 'two':2, 'three':3}
+c = dict(zip(['one','two','three'],[1,2,3]))
+d = dict([('two', 2),('one'. 1),('three', 3)])
+e = dict({'three':3, 'one':1, 'two':2})
+f = {'three':3, 'two':2, 'one':1}
+那么 a == b == c == d == e == f的值应该为true：
+'''
+a = dict(one = 1, two = 2, three = 3)
+b = {'one':1, 'two':2, 'three':3}
+c = dict(zip(['one','two','three'],[1,2,3]))
+d = dict([('two', 2),('one', 1),('three', 3)])
+e = dict({'three':3, 'one':1, 'two':2})
+f = {'three':3, 'two':2, 'one':1}
+print a == b == c == d == e == f

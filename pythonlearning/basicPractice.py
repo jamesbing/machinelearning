@@ -53,6 +53,7 @@ print sum
 
 #从python的raw_input()函数中接收到的内容永远是以字符串的形式接收的。
 #所以以下段子也就明了了：
+'''
 birthdate = raw_input("输入你的生日>>>")
 if birthdate < 2000:
     print "你是00前"
@@ -65,7 +66,7 @@ if birthdate < 2000:
     print "你是00前"
 else:
     print "你是00后"
-
+'''
 #字典和集合的应用：dict and set
 #dict在有些语言中也称作map，使用键值对的方式进行存储，有Hash表的快速查找的优点
 #总结：list的定义用['','','']; tuple的定义用(,,,);
@@ -93,3 +94,9 @@ else:
 dictA.pop('school')
 school = dictA.get('school', 'school has been deleted.')
 print school
+print '''
+有关dict的几个总结：
+① 相比list，字典：速度快，占用内存大
+② key值必须是不可变对象，因此字符串、整数等python的不可变对象都可以用来当做key、
+    但是list这种可变对象就不可以用来当做key。
+'''

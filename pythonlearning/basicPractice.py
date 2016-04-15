@@ -123,3 +123,14 @@ d = dict([('two', 2),('one', 1),('three', 3)])
 e = dict({'three':3, 'one':1, 'two':2})
 f = {'three':3, 'two':2, 'one':1}
 print a == b == c == d == e == f
+print '''
+字典的长度用len来求
+'''
+print "字典a为：", a
+print "字典a、b等的长度是",len(a)
+
+del a['one']
+print "删除字典中的元素除了用pop还可以用del函数， 例如del a['one']之后的a为：", a
+
+print "iter()以及iterkeys()函数返回的是这个字典的迭代器", a.iterkeys()
+

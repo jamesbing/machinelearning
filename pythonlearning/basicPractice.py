@@ -45,3 +45,23 @@ print changebleTuple
 changebleTuple[2][0]='C'
 changebleTuple[2][1]='D'
 print changebleTuple
+
+sum = 0
+for mark in range(101):
+    sum += mark
+print sum
+
+#从python的raw_input()函数中接收到的内容永远是以字符串的形式接收的。
+#所以以下段子也就明了了：
+birthdate = raw_input("输入你的生日>>>")
+if birthdate < 2000:
+    print "你是00前"
+else:
+    print "你是00后"
+#不管你输入多少，上面程序段输出的结果应该都是你是00后。原因时birthdate总是一个字符串，永远是false
+#因此如果你想要整数，那么应该先进行强制类型转换
+birthdate = int(raw_input("请输入你的生日>>>"))
+if birthdate < 2000:
+    print "你是00前"
+else:
+    print "你是00后"

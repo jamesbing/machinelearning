@@ -100,3 +100,9 @@ print '''
 ② key值必须是不可变对象，因此字符串、整数等python的不可变对象都可以用来当做key、
     但是list这种可变对象就不可以用来当做key。
 '''
+testDic={1:'james',2:'bing'}
+print testDic[1]
+print testDic[1.0]
+print '''
+从上面的三行代码可以看出，在字典中，1和1.0索引的是同一个位置的数据
+'''

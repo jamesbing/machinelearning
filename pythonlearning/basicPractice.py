@@ -134,3 +134,9 @@ print "删除字典中的元素除了用pop还可以用del函数， 例如del a[
 
 print "iter()以及iterkeys()函数返回的是这个字典的迭代器", a.iterkeys()
 
+print "items()函数将整个字典返回：",a.items()
+
+print "viewitems()函数返回的是：",a.viewitems()
+
+print "keys()函数返回所有的key值，values()函数返回所有的value值", a.keys(), a.values()
+

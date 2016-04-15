@@ -65,3 +65,31 @@ if birthdate < 2000:
     print "你是00前"
 else:
     print "你是00后"
+
+#字典和集合的应用：dict and set
+#dict在有些语言中也称作map，使用键值对的方式进行存储，有Hash表的快速查找的优点
+#总结：list的定义用['','','']; tuple的定义用(,,,);
+#字典的定义用{'':'', '':'', '':''};而set则需要用set关键字
+#定义一个字典：
+dictA = {'name':'james','age':26,'sex':'male'}
+print dictA['name']
+#向字典中添加新的键值对
+dictA['school'] = "Nankai University"
+print dictA['school']
+#改变字典中某个键值对的记录
+dictA['school'] = "MIT"
+print dictA['school']
+#如果直接访问字典中不存在的键值对会报错。为了避免报错，可以采用如下的访问方式：
+#第一种方法是用get函数，并且在后面指定如果不存在时返回的值
+valueDorm = dictA.get('dorm','not exist')
+print valueDorm
+#第二种方法是先判断某个键值是否存在于字典中：
+if 'dorm' in dictA:
+    dorm = dictA['dorm']
+    print dorm
+else:
+    print "can not find this key."
+#要删除某个键值对，可以用pop函数：
+dictA.pop('school')
+school = dictA.get('school', 'school has been deleted.')
+print school

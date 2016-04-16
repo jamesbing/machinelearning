@@ -55,11 +55,11 @@ class BPNet(object):
 
     # the derivation of the active function
     def dlogit(self, net):
-        pass
+        return multiply(net, (1.0 - net))
 
-    # 矩阵各元素的平方之和,用于计算惩罚因素，在反向传播时作为参数修改的依据
+    # 本函数用于计算由网络产生的输出标签矩阵与对应的训练样本的期望输出标签之间的误差值
     def errorfunc(self, inX):
-        pass
+        return sum(power(inX, 2)) * 0.5
 
     # 数据归一化函数
     def normalize(self, dataMat):

@@ -86,7 +86,19 @@ class BPNet(object):
         #initiate the hidden layer and the output layer
         self.init_hiddenWB()
         self.init_OutputWB()
-        @TODO
+        
+        # the main engine of the BP algorithm
+        for i in xrange(self.maxiter):
+            # let the signal flow from input to the output
+            # first from input to hidden layer
+            hi_input = self.hi_wb * SampIn
+            hi_output = self.logistic(hi_input)
+            hi2out = self.addcol(hi_output.T, ones((self.nSampNum , 1))).T
+            # flow from hidden to output layer
+            out_input = self.out_wb * hi2out
+            out_output = self.logistic(out_input)
+            @TODO: the parameter modifying procedure.
+
 
     # define the classifier of the BP network
     def BPClassfier(self, start, end, steps = 30):

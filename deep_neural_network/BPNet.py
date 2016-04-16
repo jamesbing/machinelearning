@@ -50,7 +50,8 @@ class BPNet(object):
 
     # the active function
     def logistic(self, net):
-        print "Logistic function been called..."
+        print "Calculating the output of this neuron by logistic function..."
+        return 1.0/(1.0 + exp(-net))
 
     # the derivation of the active function
     def dlogit(self, net):

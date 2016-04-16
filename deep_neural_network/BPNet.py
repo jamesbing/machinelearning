@@ -78,8 +78,15 @@ class BPNet(object):
         pass
 
     # train the network with back propogation protocol
-    def bpTrain(self):
-        pass
+    def bpTrain(self):        
+        #the input data matrix
+        SampIn = self.dataMat.T
+        #the predicted or expected output labels
+        expected = mat(self.classLabels)
+        #initiate the hidden layer and the output layer
+        self.init_hiddenWB()
+        self.init_OutputWB()
+        @TODO
 
     # define the classifier of the BP network
     def BPClassfier(self, start, end, steps = 30):

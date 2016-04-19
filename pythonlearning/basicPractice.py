@@ -90,7 +90,7 @@ print dictA['school']
 #改变字典中某个键值对的记录
 dictA['school'] = "MIT"
 print dictA['school']
-#如果直接访问字典中不存在的键值对会报错。为了避免报错，可以采用如下的访问方式：
+#接访问字典中不存在的键值对会报错。为了避免报错，可以采用如下的访问方式：
 #第一种方法是用get函数，并且在后面指定如果不存在时返回的值
 valueDorm = dictA.get('dorm','not exist')
 print valueDorm

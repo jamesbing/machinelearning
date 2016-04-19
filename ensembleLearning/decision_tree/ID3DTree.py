@@ -2,6 +2,29 @@
 # coding=utf-8
 # @author james.
 # This file is the core algorightm of ID3, which is a decision tree in machinelearning algorightme
+# 在决策树算法中，最核心的工作就是在一个数据集上，不断寻找对划分数据分类起关键作用的特征。
+# 其基本方式是：
+'''
+    检测数据集中的每个子项是否属于统一分类：
+    if so return class label
+    else:
+        寻找划分数据集的最好特征
+        划分数据集
+        创建分支节点
+            for 每个划分的子集
+                迭代调用这个算法病增加返回结果到分支节点中
+        return 分支节点
+'''
+#数据集划分时要遵循的核心原则是：将无序的数据变得更加有序。而组织无序数据的一种有效方式就是
+#使用信息论度量信息。可以在划分数据之前或者之后使用信息论度量。
+#数据划分之前和之后，信息所发生的变化成为信息增益，因此，计算信息增益的方法是划分数据方法衡量的重要依据。
+#这样，决策树就转换成在一个无序的数据集上，找到使划分前后的数据集的信息增益最高的方法。这个度量就是信息熵。
+
+#信息增益：information gain
+#信息熵：information entropy
+
+
+
 from numpy import *
 import math
 import copy
@@ -55,7 +78,7 @@ class ID3DTree(object):
         items = dict([(cateList.count(i), i) for i in cateList])
         return items[max(items.keys())]
 
-    def getBestFeat(self,dataSet):
+    def getBestFeature(self,dataSet):
         numFeatures = len(dataSet[0]) - 1
         baseEntropy = self.computeEntropy(dataSet)
         bestInfoGain = 0.0
@@ -73,6 +96,12 @@ class ID3DTree(object):
                 bestFeature = i
         return bestFeature
 
+    '''
+    这里其实计算的是香农熵
+    符号xi的信息定义为：l(xi) = - log2(xi)
+    所有类别中所有可能值包含的信息期望值可以用来计算香农信息熵
+    公式为:H = -∑p(xi)log2(xi)   求和范围时从1到n， n为个数
+    '''
     def computeEntropy(self,dataSet):
         datalen = float(len(dataSet))
         cateList = [data[-1] for data in dataSet]
@@ -82,7 +111,8 @@ class ID3DTree(object):
             prob = float(items[key])/datalen
             infoEntropy -= prob * math.log(prob,2)
         return infoEntropy
-
+    
+    #
     def splitDataSet(self, dataSet, axis, value):
         rtnList = []
         for featVec in dataSet:
@@ -91,3 +121,15 @@ class ID3DTree(object):
                 rFeatVec.extend(featVec[axis + 1:])
                 rtnList.append(rFeatVec)
         return rtnList
+
+    
+    #testing purpose
+    def createDataSet():
+        dataSet = [[1,1,'yes'],
+            [1,1,'yes'],
+            [1,0,'no'],
+            [0,1,'no']
+            [0,1,'no']
+        ]
+        labels = ['no surfacing', 'flippers']
+        return dataSet, labels 

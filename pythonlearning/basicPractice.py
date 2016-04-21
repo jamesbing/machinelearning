@@ -305,6 +305,32 @@ test = {len(S) for S in strings}
 print test
 
 print '''
+现在有一个嵌套列表，分别包含两个子列表，其内容分别为男人和女人的姓名。
+现在要求，将男人和女人的名字中所有包含两个e及以上的名字拿出来，组成一个列表。
+names = [['Tom','Billy','Jefferson','Andrew','Wesley','Steven','Joe'],['Alice','Jill','Ana','Wendy','Tenee','Sheery','Eva']]
+可以用两种方法实现：
+第一种方法，简单的循环嵌套：
+temp = []
+for list in names:
+	for name in list:
+		if name.count('e') >= 2:
+			temp.append(name)
+print temp
+第二种方法用推导式：
+temp2 = [name for list in names for name in list if name.count('e)>=2]
+print temp2
+'''
+
+names = [['Tom','Billy','Jefferson','Andrew','Wesley','Steven','Joe'],['Alice','Jill','Ana','Wendy','Tenee','Sheery','Eva']]
+temp = []
+for list in names:
+	for name in list:
+		if name.count('e') >= 2:
+			temp.append(name)
+temp2 = [name for list in names for name in list if name.count('e')>=2]
+print '第一种方式的结果：',temp,'第二种方式的结果',temp2
+print '可见两种结果是否相等：', temp == temp2
+print '''
 在python中，有三个与循环相关的函数，分别是range(),enumerate()和zip()
 以下代码：
 S = 'abcdefghijk'

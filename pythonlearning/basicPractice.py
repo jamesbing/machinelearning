@@ -284,8 +284,25 @@ print '''
 字典中的推导式：
 字典推导式和列表推导式差不多，只不过结果产生的是字典和集合；
 {key_expr:value_expr for value in collection if condition}
-
+下面的代码：（有关enumerate的知识在后面）
+strings = ['i','am','very','glad','to','see','you','here']
+D = [key:value for value,key in enumerate(strings)]
+print D
+的结果应该是：
 '''
+
+strings = ['i','am','very','glad','to','see','you','here']
+D = {key:value for value,key in enumerate(strings)}
+print D
+
+print '''
+代码段：
+test = {len(S) for S in strings}
+print test
+的结果是：
+'''
+test = {len(S) for S in strings}
+print test
 
 print '''
 在python中，有三个与循环相关的函数，分别是range(),enumerate()和zip()

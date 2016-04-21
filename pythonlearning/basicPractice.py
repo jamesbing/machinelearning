@@ -1,4 +1,3 @@
-
 # coding=utf-8
 print u'这是一段中文字符'
 print '这也是一段中文字符'
@@ -225,4 +224,58 @@ print '''
 代码应该是：
 '''
 result = [(x,y) for x in range(5) if x%2 == 0 for y in range(5) if y%2 == 1]
+print result
+
+print '''
+M = [[1,2,3],[4,5,6],[7,8,9]]
+将M的每个子列表的第三个元素组成一个新的列表：
+可得到结果：
+result = [row[3] for row in M]
+'''
+M = [[1,2,3],[4,5,6],[7,8,9]]
+result = [row[2] for row in M]
+print result
+
+print '''
+将M对应的矩阵的斜对角线上的元素重新组成一个新的列表：
+result = [M[i][i] for i in range(len(M))]
+'''
+result = [M[i][i] for i in range(len(M))]
+print result
+
+print '''
+现在有两个列表，除了M,还有N，M用的是上面的定义：
+'''
+print M
+print '''
+N的定义为：
+'''
+N = [[2,2,2],[3,3,3],[4,4,4]]
+print N
+print '''
+现在要做的事情是用这两个矩阵中的元素做一些运算：
+首先：得到如下矩阵：
+[2,4,6,12,15,18,28,32,36]
+result = [M[x][y] * N[x][y] for x in range(3) for y in range(3)]
+运算结果为：
+'''
+result = [M[x][y] * N[x][y] for x in range(3) for y in range(3)]
+print result
+
+print '''
+然后要求得到如下结果：
+[2,4,6],[12,15,18],[28,32,36]
+应该这样：
+result = [[M[x][y] * N[x][y] for x in range(3)] for y in range(3)]
+最终结果应该是：
+'''
+result = [[M[x][y] * N[x][y] for x in range(3)] for y in range(3)]
+print result
+result = [[M[y][x] * N[y][x] for x in range(3)] for y in range(3)]
+
+print '''
+上面的x y掉个个就成了：
+result = [[M[y][x] * N[y][x] for x in range(3)] for y in range(3)]
+结果为：
+'''
 print result

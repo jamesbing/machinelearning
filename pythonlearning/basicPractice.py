@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 # coding=utf-8
 print u'这是一段中文字符'
 print '这也是一段中文字符'
@@ -196,5 +196,33 @@ s = set([1,2,3,2,1,3,1,2,[3,2,4,5],4,3,2])
 print s的结果为：
 '''
 
-s = set([1,2,3,2,1,3,1,2,[3,2,4,5],4,3,2])
-print s
+#s = set([1,2,3,2,1,3,1,2,[3,2,4,5],4,3,2])
+#print s
+
+print '''
+python中有一个很重要的功能叫做推倒式。推导式包含列表推导式，字典推导式和集合推导式，分别对应三种不同的python容器
+列表推导式可以用一条语句构造一个新列表，代码可以写成：
+[expr for value in collection ifcondition]
+它相当于下面一段代码：
+result = []
+for value in collection:
+	if condition:
+	result.append(expression)
+实际应用：过滤掉长度小于3的字符串列表，并将剩下的转换成大写字母：
+names = ['Bob','Tom','alice','Jerry','Wendy','Smith']
+[name.uper() for name in names if len(name)>3]
+返回的应该是['ALICE','JERRY','WENDY','SMITH']
+'''
+
+names = ['Bob','Tom','alice','Jerry','Wendy','Smith']
+
+result = [name.upper() for name in names if len(name)>3]
+
+print result
+
+print '''
+第二个例子是：求（x,y）其中x是0-5之间的偶数，y是0-5之间的奇数组成的元组列表
+代码应该是：
+'''
+result = [(x,y) for x in range(5) if x%2 == 0 for y in range(5) if y%2 == 1]
+print result

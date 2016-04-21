@@ -279,3 +279,72 @@ result = [[M[y][x] * N[y][x] for x in range(3)] for y in range(3)]
 结果为：
 '''
 print result
+
+print '''
+字典中的推导式：
+字典推导式和列表推导式差不多，只不过结果产生的是字典和集合；
+{key_expr:value_expr for value in collection if condition}
+
+'''
+
+print '''
+在python中，有三个与循环相关的函数，分别是range(),enumerate()和zip()
+以下代码：
+S = 'abcdefghijk'
+for i in range(0, len(S), 2)
+	print S[i]
+的输出为：
+'''
+S = 'abcdefghijk'
+for i in range(0, len(S), 2):
+	print S[i]
+
+print '''
+上面range中的变量分别是：起点，重点，步长
+enumerate（）函数的作用是：在每次循环中同时得到元素的下标以及元素本身。
+下面的代码：
+S仍然用上面的S
+for (index, char) in enumerate(S):
+	print index
+	print char
+输出结果为：
+'''
+for (index, char) in enumerate(S):
+	print index,char
+
+print '''
+此处可以联系前面的推导式中的东西。
+enumerate（）在每次循环时返回的是一个包含两个元素的元组tuple，两个元组分别赋给
+index和char两个变量。
+而zip（）函数则可以在应对多个等长序列时，每次循环都各从各个序列中分别取出一个元素
+此时可以用zip（）方便实现。
+下面的代码：
+ta = [1,2,3]
+tb = [9,8,7]
+tc = ['a','b','c']
+for (a,b,c) in zip(ta,tb,tc):
+	print(a,b,c)
+这样每次循环的时候，都会从各个序列中分别从左到右取出一个元素，并合并成一个tuple，然后
+将tuple中的元素赋给a,b,c。就像其名字一样，zip起到聚合数据的作用。
+故上面的代码的输出应该是：
+'''
+ta = [1,2,3]
+tb = [9,8,7]
+tc = ['a','b','c']
+for (a,b,c) in zip(ta,tb,tc):
+	print(a,b,c)
+print '''
+此外，对于上面的ta,tb，下面的代码：
+zipped = zip(ta,tb)
+print (zipped)
+#而加上表示指针的符号*之后则起到解压的作用
+suba, subb = zip(*zipped)
+print (na, nb)
+这段代码的输出是：
+'''
+
+zipped = zip(ta,tb)
+print (zipped)
+#而加上表示指针的符号*之后则起到解压的作用
+suba, subb = zip(*zipped)
+print (suba, subb)

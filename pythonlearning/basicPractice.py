@@ -391,3 +391,61 @@ print (zipped)
 #而加上表示指针的符号*之后则起到解压的作用
 suba, subb = zip(*zipped)
 print (suba, subb)
+
+print '''
+一些常用的python系统函数：
+abs（）求绝对值
+cmp（x,y）比较两个数的大小，如果x<y返回-1，如果x>y返回1，如果x==y返回0
+数据类型转换相关函数：
+int强制转换成整形
+float强制转换成浮点型
+str强制转换成字符串string
+unicode强制转换成Unicode编码，可以查看一个字符所对应的Unicode编码
+bool强制转换成布尔类型
+有个小例子：
+a=abs
+a(-1)应该得到的是1，因为a相当于abs这个函数
+'''
+a=abs
+print a(-1)
+print '''
+如果暂时一个函数什么都不做，可以用pass来告诉编译器，否则会报错
+例如：
+def testing_doing_nothing():
+这样是会报错的，但是如果写成：
+def testing_doing_nothing():
+	pass
+就不会出错
+'''
+def testing_doing_nothing():
+	pass
+print '''
+此外pass还可以放在其他的地方，一般来说是任何冒号的后面，这样就意味着这一块
+执行到冒号之后该干嘛还没想好，例如可以放在if语句中：
+if age >= 18:
+	pass
+同样如果没有这个pass也是会报错的。
+
+下一个问题是怎样在自己的函数中自己定义一些错误呢？
+即怎样定义类似于java中的exception呢？
+可以这么搞：
+def my_testing_function(x):
+	if not isinstance(x,(int, float)):
+		raise TypeError('bad operand type')
+	if x >= 0:
+		return x
+	else:
+		return -x
+然后调用：my_testing_function('测试')会出现以下结果：
+'''
+def my_testing_function(x):
+	if not isinstance(x,(int, float)):
+		raise TypeError('输入的值的类型有误！')
+	if x >= 0:
+		return x
+	else:
+		return -x
+#my_testing_function('测试')
+print '显然这样就把错误给唤出来了'
+
+

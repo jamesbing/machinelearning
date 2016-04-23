@@ -448,4 +448,27 @@ def my_testing_function(x):
 #my_testing_function('测试')
 print '显然这样就把错误给唤出来了'
 
-
+print '''
+python的函数可以‘返回多个值’，其实这只是一个假象，真相是：
+python把多个要返回的值打包成一个tuple扔了回来，然后后面的
+调用函数的地方，接收方再把这个tuple解压出来。例如：
+def test_multiple_return():
+	a = 1
+	b = 9
+	b *= b
+	return a, b
+m = test_multiple_return()
+m[0] = 9
+执行到这儿应该会报错，就是尝试修改tuple不可变对象的错误。
+然后可以看一下instanceof(m)是：
+'''
+def test_multiple_return():
+	a = 1
+	b = 9
+	b *= b
+	return a, b
+m = test_multiple_return()
+a, b = m
+#m[0] = 9
+print type(m)
+print '得到的值分别是：', a, b

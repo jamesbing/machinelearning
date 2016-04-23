@@ -472,3 +472,18 @@ a, b = m
 #m[0] = 9
 print type(m)
 print '得到的值分别是：', a, b
+
+print '''
+函数的默认参数设置：直接在参数列表中让这个值等于某个值即可。
+如果不加这个默认参数，那么调用时参数列表必须对其赋值否则会报错。
+例如：
+def testing_default_parameter(a = 1, b = 3):
+	return a + b
+那么如果不加参数调用这个函数会得到：
+'''
+
+def testing_default_parameter(a = 1, b = 3):
+	return a + b
+
+print testing_default_parameter()
+

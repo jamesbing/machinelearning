@@ -554,3 +554,51 @@ def test_link_parameter_sub(L = None):
 test_link_parameter_sub()
 test_link_parameter_sub()
 test_link_parameter_sub()
+
+print '''
+python可变参数：参数列表中的参数个数是可变的。这种情况下，无法实现预知
+一个函数到底可以接受多少参数，此时可以用tuple或者list将参数包起来传过去
+例如：
+def my_add(numbers):
+	sum = 0
+	for number in numbers:
+		sum += number
+	print sum
+	return sum
+使用时可以这样：
+my_add([1,2,3,4,5])
+my_add([5,6,7,8,9,0,3])
+结果如下：
+'''
+
+def my_add(numbers):
+	sum = 0
+	for number in numbers:
+		sum += number
+	print sum
+	return sum
+my_add([1,2,3,4,5])
+my_add([5,6,7,8,9,0,3])
+
+print '''
+但是这样有个缺点，就是每次调用之前都需要组装一个数组或者tuple
+如果改一下函数定义，将参数列表改成类似于C中的指针形式，就 不需要这样调用了
+
+def my_add_sub(*numbers):
+	sum = 0
+	for number in numbers:
+		sum += number
+	print sum
+	return sum
+这样调用的时候直接往里面写数字即可：
+my_add_sub(1,2,4,5,6)
+my_add_sub(3,4,1,2,2,1,2,3,4,5,6)
+'''
+def my_add_sub(*numbers):
+	sum = 0
+	for number in numbers:
+		sum += number
+	print sum
+	return sum
+my_add_sub(1,2,4,5,6)
+my_add_sub(3,4,1,2,2,1,2,3,4,5,6)

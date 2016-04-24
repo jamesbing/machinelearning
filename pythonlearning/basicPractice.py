@@ -487,3 +487,22 @@ def testing_default_parameter(a = 1, b = 3):
 
 print testing_default_parameter()
 
+print '''
+默认参数的好处就是可以降低函数的设计和调用难度。例如：
+def sign_up(name, age, country = 'China', city = 'Beijing'):
+	print 'name is :', name
+	print 'age is :', age
+	print 'country is:', country
+	print 'city is :', city
+在调用上述函数的时候，如果想指定某个参数的值，那么在调用时传参列表中
+加上这个参数的具体指定即可，例如sign_up('james', 26, city = 'Tianjin')，那么
+不加指定的就会使用默认参数。调用的结果为：
+'''
+def sign_up(name, age, country = 'China', city = 'Beijing'):
+	print 'name is :', name
+	print 'age is :', age
+	print 'country is:', country
+	print 'city is :', city
+
+sign_up('james', 26, city = 'Tianjin')
+

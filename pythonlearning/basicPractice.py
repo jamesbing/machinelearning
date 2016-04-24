@@ -506,3 +506,51 @@ def sign_up(name, age, country = 'China', city = 'Beijing'):
 
 sign_up('james', 26, city = 'Tianjin')
 
+print '''
+默认参数的一个坑：且看下面的例子(用list作默认参数—)
+def test_link_parameter(L=[]):
+	L.append('END')
+	print L
+那么当这样使用的时候：
+test_link_parameter(['a'])
+test_link_parameter(['1','2','3'])
+这样结果都不会出错。
+但是，如果继续这样调用：
+test_link_parameter()
+test_link_parameter()
+这样调用两次以后会得到错误的结果，如下所示：
+'''
+def test_link_parameter(L=[]):
+	L.append('END')
+	print L
+test_link_parameter(['a'])
+test_link_parameter(['1','2','3'])
+test_link_parameter()
+test_link_parameter()
+
+print '''
+这是因为list是可变的变量，最后两次调用由于都是用了一个默认的变量L
+而这个L是在第一次默认调用时就已经创建好了的，所以：第二次默认调用以后
+这个值就变成了在第一次创建的L后面继续加东西的过程。
+为了避免这样的尴尬，可以这么写：
+test_link_parameter_sub(L = None):
+	if L is None:
+		L = []
+	L.append('END')
+	print L
+这样的话，L就指向了一个不可变对象None,无论默认调用多少次都不会出错了，
+这个地方很容易产生bug，一定要注意。
+测试一下：
+连续三次调用:
+test_link_parameter_sub()
+的结果如下：
+'''
+
+def test_link_parameter_sub(L = None):
+	if L is None:
+		L = []
+	L.append('END')
+	print L
+test_link_parameter_sub()
+test_link_parameter_sub()
+test_link_parameter_sub()

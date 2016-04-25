@@ -612,3 +612,45 @@ my_func(*args, **kw)
 args = (1,2,3,4)
 kw = {'alpha':'a','basic':'haha','age':26}
 my_func(*args, **kw)
+print '使用*arg和**kw是python的习惯用法。'
+
+print '''
+递归函数定义简单逻辑清晰，但是应该防止栈溢出。函数调用利用的是栈这种数据结构
+来实现的，每当进入一个函数调用，栈就会自动增加一层，每当函数返回的时候
+栈就会减少一层。所以当递归调用次数太多时，就会由于缺少足够的存储空间来
+放置这个栈而引起栈溢出。例如：
+def my_stack_test(n):
+    if n == 1:
+        return 1
+    return n * my_stack_test(n - 1)
+my_stack_test(1000)
+会看到堆栈溢出的信息。
+解决栈溢出的方法是尾递归优化，尾递归和循环的效果其实是一样的，不过
+具有递归的逻辑清晰的有点。因此递归可以看成是一种特殊的尾递归函数。
+尾递归指的是：
+在函数返回的时候，调用自身本身，而且return语句不能包含表达式。这样编译器
+会自动进行尾递归优化，这样无论递归调用多少次，都只占用一个栈空间，不会出现溢出。
+上面的函数改成尾递归后应该这么写
+def my_stack_good(n):
+    return my_stack_inter(n,1)
+
+def my_stack_inter(num, product):
+    if num == 1:
+        return product
+    return my_stack_inter(num - 1, num * product)
+这样尝试调用my_stack_good(1000)就不会在出错了：
+'''
+def my_stack_test(n):
+    if n == 1:
+        return 1
+    return n * my_stack_test(n - 1)
+#my_stack_test(1000)
+
+def my_stack_good(n):
+    return my_stack_inter(n,1)
+
+def my_stack_inter(num, product):
+    if num == 1:
+        return product
+    return my_stack_inter(num - 1, num * product)
+my_stack_good(1000)

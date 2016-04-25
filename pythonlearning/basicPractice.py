@@ -614,3 +614,19 @@ my_add_sub(*numbers),也可以得到结果：
 numbers = [1,2,3,4]
 my_add_sub(*numbers)
 
+print '''
+组合起来讲，可以写一个例子：
+def person(name, age, country = 'China', **otherInfo):
+    print 'name:',name,'age:',age,'country:', country, otherInfo
+    print 'major:',otherInfo.get('major')
+person('james',26,country = 'USA', sex = 'male')
+person('james',26,{'major':'engineer','address':'A str, B number'})
+'''
+def person(name, age, country = 'China', **otherInfo):
+    print 'name:',name,'age:',age,'country:', country, otherInfo
+    print 'major:',otherInfo.get('major')
+
+person('james',26,country = 'USA', city='Tianjin')
+otherInfo = {'city':'Tianjin','major':'student','sex':'male'}
+person('james',26,country = 'USA',**otherInfo)
+print '上面的代码段中，参数列表用了两个**来表示可变参数。'

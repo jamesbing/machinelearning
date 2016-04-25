@@ -717,4 +717,8 @@ print 'guess who am i!'[::2]
 
 print '''
 ②第二个高级特性是迭代：Iteration
+应用场景：给定一个list或tuple的时候，如果要遍历之，可以用for .... in来访问
+而java或者c则是用个下标来访问
+python的for循环抽象程度要高于java的for循环，而python的for循环基本上适用于一切可以迭代的对象上。
+只要是可以迭代的对象，不论有无下标都可以迭代。
 '''

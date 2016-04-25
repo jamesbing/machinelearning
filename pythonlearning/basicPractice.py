@@ -640,6 +640,7 @@ def my_stack_inter(num, product):
     return my_stack_inter(num - 1, num * product)
 这样尝试调用my_stack_good(1000)就不会在出错了：
 '''
+print '''
 def my_stack_test(n):
     if n == 1:
         return 1
@@ -654,3 +655,62 @@ def my_stack_inter(num, product):
         return product
     return my_stack_inter(num - 1, num * product)
 my_stack_good(1000)
+print '''
+
+print '''
+高级特性：
+Python中，代码不是越多越好，而是越少越好。一些高级特性有助于用更少的代码量来实现同样的功能。
+一行代码能够实现的功能，绝不用五行代码实现。
+这里要学习四个高级特性：
+①切片***Slice
+②迭代
+③列表生成式，也就是前面的列表推倒式
+④生成器。
+现在进行该部分学习
+'''
+print '''
+①切片，Slice。这一特性主要是为了应对list或tuple的部分元素的操作。
+如果是少量的元素，用循环append还好办，但是如果元素的数量较多，比如100000个元素去前8888个，那就傻了
+于是可以用python的切片功能。
+其实很简单，就是[x:y]就表示取从x到y的元素，包括x但不包括y。如果是正数，则是从前往后取，如果是负数，
+则表示从后往前取值数数。例如，L[-2:]表示从倒数第二个往前取值，一直取到第一个。（如果冒号前后不写东西
+在冒号前就意味着是开头，如果冒号后面，表示末尾。
+例如：
+L = range(10000)
+#则L[0:777]表示取777个值，如果是L[-1000:]表示取后1000个数字。结果分别是：
+print L[0:777], L[-1000:]
+#TODO以后可以用python的计时工具来计算一下用切片和用循环分别用的时间。
+'''
+L = range(10000)
+#则L[0:777]表示取777个值，如果是L[-1000:]表示取后1000个数字。结果分别是：
+print L[0:777], L[-1000:]
+#TODO以后可以用python的计时工具来计算一下用切片和用循环分别用的时间。
+
+print '''
+切片一些其他用法：
+①例如：前一百个数字，每隔五个数字取一个：
+print L[:100:5]
+'''
+#print L[:100:5]
+
+print '''
+②原样复制一个list：
+M = L[:]
+#print M
+'''
+M = L[:]
+print M
+
+print '''
+③对tuple的操作：
+print (0,1,2,3,4,5)[:5]
+'''
+print (0,1,2,3,4,5)[:5]
+
+print '''
+字符串'xxx'或者Unicode字符串u'xxx'也可以看做是一种list，每个元素就是一个字符
+print 'guess who am i！'[0:5]
+print 'guess who am i!'[::2]
+'''
+print 'guess who am i！'[0:5]
+print 'guess who am i!'[::2]

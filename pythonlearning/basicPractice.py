@@ -663,9 +663,9 @@ Python中，代码不是越多越好，而是越少越好。一些高级特性�
 一行代码能够实现的功能，绝不用五行代码实现。
 这里要学习四个高级特性：
 ①切片***Slice
-②迭代
-③列表生成式，也就是前面的列表推倒式
-④生成器。
+②迭代***Interation
+③列表生成式，也就是前面的列表推导***Comprehensions
+④生成器***Generator
 现在进行该部分学习
 '''
 print '''
@@ -714,3 +714,7 @@ print 'guess who am i!'[::2]
 '''
 print 'guess who am i！'[0:5]
 print 'guess who am i!'[::2]
+
+print '''
+②第二个高级特性是迭代：Iteration
+'''

@@ -40,7 +40,6 @@ print tupleOne
 print numberOne
 print tupleTwo
 print stringOne
-
 print '''
 一个有关tuple的小trick，就是一个貌似可变的tuple
 changebleTuple=('a','b',['A','B'])
@@ -49,7 +48,6 @@ changebleTuple[2][0]='C'
 changebleTuple[2][1]='D'
 print changebleTuple的结果是：
 '''
-
 changebleTuple=('a','b',['A','B'])
 print changebleTuple
 changebleTuple[2][0]='C'
@@ -59,7 +57,6 @@ sum = 0
 for mark in range(101):
     sum += mark
 print sum
-
 print '#从python的raw_input()函数中接收到的内容永远是以字符串的形式接收的。'
 print '#所以以下段子也就明了了：'
 '''
@@ -75,7 +72,6 @@ if birthdate < 2000:
     print "你是00前"
 else:
     print "你是00后"
-
 #字典和集合的应用：dict and set
 #dict在有些语言中也称作map，使用键值对的方式进行存储，有Hash表的快速查找的优点
 #总结：list的定义用['','','']; tuple的定义用(,,,);
@@ -104,7 +100,6 @@ dictA.pop('school')
 school = dictA.get('school', 'school has been deleted.')
 print school
 '''
-
 dictA = {'name':'james','age':26,'sex':'male'}
 print dictA['name']
 #向字典中添加新的键值对
@@ -127,7 +122,6 @@ else:
 dictA.pop('school')
 school = dictA.get('school', 'school has been deleted.')
 print school
-
 print '''
 有关dict的几个总结：
 ① 相比list，字典：速度快，占用内存大
@@ -162,20 +156,13 @@ print '''
 '''
 print "字典a为：", a
 print "字典a、b等的长度是",len(a)
-
 del a['one']
 print "删除字典中的元素除了用pop还可以用del函数， 例如del a['one']之后的a为：", a
-
 print "iter()以及iterkeys()函数返回的是这个字典的迭代器", a.iterkeys()
-
 print "items()函数将整个字典返回：",a.items()
-
 print "viewitems()函数返回的是：",a.viewitems()
-
 print "keys()函数返回所有的key值，values()函数返回所有的value值", a.keys(), a.values()
-
 #TODO python的字典用法有待继续补充，此处先继续进行set的练习
-
 print '''
 set跟dict一样都是一组集合，
 但是set相当于一个dict但是不存储value，只存储key，而且set中存储的
@@ -194,10 +181,8 @@ set中不能有可变对象，比如将一个嵌套list丢进去：
 s = set([1,2,3,2,1,3,1,2,[3,2,4,5],4,3,2])
 print s的结果为：
 '''
-
 #s = set([1,2,3,2,1,3,1,2,[3,2,4,5],4,3,2])
 #print s
-
 print '''
 python中有一个很重要的功能叫做推倒式。推导式包含列表推导式，字典推导式和集合推导式，分别对应三种不同的python容器
 列表推导式可以用一条语句构造一个新列表，代码可以写成：
@@ -212,20 +197,15 @@ names = ['Bob','Tom','alice','Jerry','Wendy','Smith']
 [name.uper() for name in names if len(name)>3]
 返回的应该是['ALICE','JERRY','WENDY','SMITH']
 '''
-
 names = ['Bob','Tom','alice','Jerry','Wendy','Smith']
-
 result = [name.upper() for name in names if len(name)>3]
-
 print result
-
 print '''
 第二个例子是：求（x,y）其中x是0-5之间的偶数，y是0-5之间的奇数组成的元组列表
 代码应该是：
 '''
 result = [(x,y) for x in range(5) if x%2 == 0 for y in range(5) if y%2 == 1]
 print result
-
 print '''
 M = [[1,2,3],[4,5,6],[7,8,9]]
 将M的每个子列表的第三个元素组成一个新的列表：
@@ -235,14 +215,12 @@ result = [row[3] for row in M]
 M = [[1,2,3],[4,5,6],[7,8,9]]
 result = [row[2] for row in M]
 print result
-
 print '''
 将M对应的矩阵的斜对角线上的元素重新组成一个新的列表：
 result = [M[i][i] for i in range(len(M))]
 '''
 result = [M[i][i] for i in range(len(M))]
 print result
-
 print '''
 现在有两个列表，除了M,还有N，M用的是上面的定义：
 '''
@@ -261,7 +239,6 @@ result = [M[x][y] * N[x][y] for x in range(3) for y in range(3)]
 '''
 result = [M[x][y] * N[x][y] for x in range(3) for y in range(3)]
 print result
-
 print '''
 然后要求得到如下结果：
 [2,4,6],[12,15,18],[28,32,36]
@@ -272,14 +249,12 @@ result = [[M[x][y] * N[x][y] for x in range(3)] for y in range(3)]
 result = [[M[x][y] * N[x][y] for x in range(3)] for y in range(3)]
 print result
 result = [[M[y][x] * N[y][x] for x in range(3)] for y in range(3)]
-
 print '''
 上面的x y掉个个就成了：
 result = [[M[y][x] * N[y][x] for x in range(3)] for y in range(3)]
 结果为：
 '''
 print result
-
 print '''
 字典中的推导式：
 字典推导式和列表推导式差不多，只不过结果产生的是字典和集合；
@@ -290,11 +265,9 @@ D = [key:value for value,key in enumerate(strings)]
 print D
 的结果应该是：
 '''
-
 strings = ['i','am','very','glad','to','see','you','here']
 D = {key:value for value,key in enumerate(strings)}
 print D
-
 print '''
 代码段：
 test = {len(S) for S in strings}
@@ -303,7 +276,6 @@ print test
 '''
 test = {len(S) for S in strings}
 print test
-
 print '''
 现在有一个嵌套列表，分别包含两个子列表，其内容分别为男人和女人的姓名。
 现在要求，将男人和女人的名字中所有包含两个e及以上的名字拿出来，组成一个列表。
@@ -320,7 +292,6 @@ print temp
 temp2 = [name for list in names for name in list if name.count('e)>=2]
 print temp2
 '''
-
 names = [['Tom','Billy','Jefferson','Andrew','Wesley','Steven','Joe'],['Alice','Jill','Ana','Wendy','Tenee','Sheery','Eva']]
 temp = []
 for list in names:
@@ -341,7 +312,6 @@ for i in range(0, len(S), 2)
 S = 'abcdefghijk'
 for i in range(0, len(S), 2):
 	print S[i]
-
 print '''
 上面range中的变量分别是：起点，重点，步长
 enumerate（）函数的作用是：在每次循环中同时得到元素的下标以及元素本身。
@@ -354,7 +324,6 @@ for (index, char) in enumerate(S):
 '''
 for (index, char) in enumerate(S):
 	print index,char
-
 print '''
 此处可以联系前面的推导式中的东西。
 enumerate（）在每次循环时返回的是一个包含两个元素的元组tuple，两个元组分别赋给
@@ -385,13 +354,11 @@ suba, subb = zip(*zipped)
 print (na, nb)
 这段代码的输出是：
 '''
-
 zipped = zip(ta,tb)
 print (zipped)
 #而加上表示指针的符号*之后则起到解压的作用
 suba, subb = zip(*zipped)
 print (suba, subb)
-
 print '''
 一些常用的python系统函数：
 abs（）求绝对值
@@ -425,7 +392,6 @@ print '''
 if age >= 18:
 	pass
 同样如果没有这个pass也是会报错的。
-
 下一个问题是怎样在自己的函数中自己定义一些错误呢？
 即怎样定义类似于java中的exception呢？
 可以这么搞：
@@ -447,7 +413,6 @@ def my_testing_function(x):
 		return -x
 #my_testing_function('测试')
 print '显然这样就把错误给唤出来了'
-
 print '''
 python的函数可以‘返回多个值’，其实这只是一个假象，真相是：
 python把多个要返回的值打包成一个tuple扔了回来，然后后面的
@@ -472,7 +437,6 @@ a, b = m
 #m[0] = 9
 print type(m)
 print '得到的值分别是：', a, b
-
 print '''
 函数的默认参数设置：直接在参数列表中让这个值等于某个值即可。
 如果不加这个默认参数，那么调用时参数列表必须对其赋值否则会报错。
@@ -481,12 +445,9 @@ def testing_default_parameter(a = 1, b = 3):
 	return a + b
 那么如果不加参数调用这个函数会得到：
 '''
-
 def testing_default_parameter(a = 1, b = 3):
 	return a + b
-
 print testing_default_parameter()
-
 print '''
 默认参数的好处就是可以降低函数的设计和调用难度。例如：
 def sign_up(name, age, country = 'China', city = 'Beijing'):
@@ -503,9 +464,7 @@ def sign_up(name, age, country = 'China', city = 'Beijing'):
 	print 'age is :', age
 	print 'country is:', country
 	print 'city is :', city
-
 sign_up('james', 26, city = 'Tianjin')
-
 print '''
 默认参数的一个坑：且看下面的例子(用list作默认参数—)
 def test_link_parameter(L=[]):
@@ -527,7 +486,6 @@ test_link_parameter(['a'])
 test_link_parameter(['1','2','3'])
 test_link_parameter()
 test_link_parameter()
-
 print '''
 这是因为list是可变的变量，最后两次调用由于都是用了一个默认的变量L
 而这个L是在第一次默认调用时就已经创建好了的，所以：第二次默认调用以后
@@ -545,7 +503,6 @@ test_link_parameter_sub(L = None):
 test_link_parameter_sub()
 的结果如下：
 '''
-
 def test_link_parameter_sub(L = None):
 	if L is None:
 		L = []
@@ -554,7 +511,6 @@ def test_link_parameter_sub(L = None):
 test_link_parameter_sub()
 test_link_parameter_sub()
 test_link_parameter_sub()
-
 print '''
 python可变参数：参数列表中的参数个数是可变的。这种情况下，无法实现预知
 一个函数到底可以接受多少参数，此时可以用tuple或者list将参数包起来传过去
@@ -570,7 +526,6 @@ my_add([1,2,3,4,5])
 my_add([5,6,7,8,9,0,3])
 结果如下：
 '''
-
 def my_add(numbers):
 	sum = 0
 	for number in numbers:
@@ -579,11 +534,9 @@ def my_add(numbers):
 	return sum
 my_add([1,2,3,4,5])
 my_add([5,6,7,8,9,0,3])
-
 print '''
 但是这样有个缺点，就是每次调用之前都需要组装一个数组或者tuple
 如果改一下函数定义，将参数列表改成类似于C中的指针形式，就 不需要这样调用了
-
 def my_add_sub(*numbers):
 	sum = 0
 	for number in numbers:
@@ -602,7 +555,6 @@ def my_add_sub(*numbers):
 	return sum
 my_add_sub(1,2,4,5,6)
 my_add_sub(3,4,1,2,2,1,2,3,4,5,6)
-
 print '''
 这样有个问题，就是如果已经有了一个列表或者是tuple，要传给他怎么办呢？
 假设有个numbers = [1,2,3,4]那么应该这样传递：
@@ -613,7 +565,6 @@ my_add_sub(*numbers),也可以得到结果：
 '''
 numbers = [1,2,3,4]
 my_add_sub(*numbers)
-
 print '''
 组合起来讲，可以写一个例子：
 def person(name, age, country = 'China', **otherInfo):
@@ -625,8 +576,39 @@ person('james',26,{'major':'engineer','address':'A str, B number'})
 def person(name, age, country = 'China', **otherInfo):
     print 'name:',name,'age:',age,'country:', country, otherInfo
     print 'major:',otherInfo.get('major')
-
 person('james',26,country = 'USA', city='Tianjin')
 otherInfo = {'city':'Tianjin','major':'student','sex':'male'}
 person('james',26,country = 'USA',**otherInfo)
 print '上面的代码段中，参数列表用了两个**来表示可变参数。'
+print '''
+python在定义函数的时候可以用四种类型的参数，他们可以混合使用：这四种参数为：
+必选参数，默认参数，可变参数以及关键字参数。参数定义的顺序必须是：
+必选参数、默认参数、可变参数以及关键字参数。上面一段代码的例子就是关键字参数。
+例如：
+def my_func(a,b,c=0,*args,**key):
+    print 'a:',a,'b:',b,'c:',c,'args:',args,'key parameters:', key
+在调用的时候，python解释器会按照参数位置和参数名把对应的参数穿进去。
+例如：
+my_func(1,2)
+my_func(1,2,c=3)
+my_func(1,2,3,'a','b')
+my_func(1,2,3,'a','b','c',test='testing funny')
+这些调用产生的结果分别如下：
+'''
+def my_func(a,b,c=0,*args,**key):
+    print 'a:',a,'b:',b,'c:',c,'args:',args,'key parameters:', key
+my_func(1,2)
+my_func(1,2,c=3)
+my_func(1,2,3,'a','b')
+my_func(1,2,3,'a','b','c',test='testing funny')
+print '''
+对于任意函数，都可以通过类似func(*args, **kw)的形式来调用它，
+无论它的参数列表是怎样定义的。
+例如可以这样调用上述函数：
+args = (1,2,3,4,5,6,'testing value')
+kw = {'alpha':'a','basic':'haha','age':26}
+my_func(*args, **kw)
+'''
+args = (1,2,3,4)
+kw = {'alpha':'a','basic':'haha','age':26}
+my_func(*args, **kw)

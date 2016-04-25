@@ -602,3 +602,15 @@ def my_add_sub(*numbers):
 	return sum
 my_add_sub(1,2,4,5,6)
 my_add_sub(3,4,1,2,2,1,2,3,4,5,6)
+
+print '''
+这样有个问题，就是如果已经有了一个列表或者是tuple，要传给他怎么办呢？
+假设有个numbers = [1,2,3,4]那么应该这样传递：
+my_add_sub(numbers[0],numbers[1],numbers[2],numbers[3])
+这样很麻烦，可以采用类似于C语言中的穿指针的方法，直接把numbers整个扔进去就可以了：
+即这样：
+my_add_sub(*numbers),也可以得到结果：
+'''
+numbers = [1,2,3,4]
+my_add_sub(*numbers)
+

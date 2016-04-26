@@ -804,3 +804,83 @@ print g_former.next()
 print '''
 上面的代码段涉及到iterator的一些trick
 '''
+print '''
+generator的强大功能可以通过下面的例子得到体现：
+斐波那契数列可以用以下代码得到：
+def fib(max):
+    n, a, b = 0, 0 ,1
+    while n < max:
+        print b
+        a, b = b, a + b
+        n += 1
+这样就可以输出指定的大小的斐波那契数列:
+fib(6)
+'''
+def fib(max):
+    n, a, b = 0, 0 ,1
+    while n < max:
+        print b
+        a, b = b, a + b
+        n += 1
+fib(6)
+
+print '''
+通过观察，可以发现这一串其实是有一种规则，根据规则递推一个有规律的东西的，特别适合用生成器generator
+要把fib函数改成generator，只要把上面的print b改成yield b就可以了。
+这也就是另外一种定义generator的方法，也就是如果一个函数中包含yield关键字，那么这个函数就不再是
+普通的函数，而是一个generator了。我们定义并调用会发现：
+def fib_sub(max):
+    n, a, b = 0, 0 ,1
+    while n < max:
+        yield b
+        a, b = b, a + b
+        n += 1
+fib(6)是无法直接运行的，而是要用以下方法：
+for m in fib_sub(6):
+    print m
+'''
+def fib_sub(max):
+    n, a, b = 0, 0 ,1
+    while n < max:
+        yield b
+        a, b = b, a + b
+        n += 1
+print fib_sub(6)
+
+for m in fib_sub(6):
+    print m
+
+print '''
+generator的执行方式和普通的函数是不同的。
+普通函数在被调用以后就会一直运行，直到正常结束或者
+遇到return、break等语句之后才会停止
+而generator值则是每次调用的时候都会通过调用next()执行，
+遇到yield语句就停止，并且将yield对应的值作为返回值返回
+下次执行时从上次执行的yield语句处继续执行。
+可以看一下以下代码段：
+def odd():
+    print 'step 1'
+    yield 1
+    print 'step 2'
+    yield 2
+    print 'step 3'
+    yield 3
+
+o = odd()
+print o.next
+print o.next
+print o.next
+其运行结果如下：
+'''
+def odd():
+    print 'step 1'
+    yield 1
+    print 'step 2'
+    yield 2
+    print 'step 3'
+    yield 3
+
+o = odd()
+print o.next
+print o.next
+print o.next

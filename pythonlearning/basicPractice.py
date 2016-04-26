@@ -1,5 +1,9 @@
 # coding=utf-8
+
 from collections import Iterable
+import os
+
+
 print u'这是一段中文字符'
 print '这也是一段中文字符'
 print '测试格式化输出'
@@ -759,3 +763,44 @@ for x, y in [(1,2),(2,4),(5,9)]:
 testingVector = [(1,2),(2,3)]
 sub_TestingVector = testingVector[0]
 print '[(1,2),(3,4)]的元素的类型是：',type(sub_TestingVector)
+
+print '''
+列表生成式也就是推倒式，前面已经介绍过，此处再举个例子。
+要列出当前目录下所有的文件和目录名，可以用以下代码：
+import os
+[d for d in os.listdir('.')]
+'''
+print [d for d in os.listdir('.')]
+
+print '''
+④生成器Generator
+通过前面的列表生成器可以快速生成一个列表但是收到内存限制，列表容量肯定时有限的。
+而且有时候会浪费内存空间，例如生成100万个元素以后只用其中的一两百个元素，那么其他的就是浪费了
+如果列表中的内容可以用某种算法推算出来，就可以在循环过程中不断推算出后面的后续元素。
+这样就不需要创建完整的list从而节省大量的空间。
+python一边循环一边计算的机制，就是Generator
+创建一个generator有以下几种方法，
+第一种方法就是把推导式的[]改为()，然后就得到了一个generator。
+generator中保存的是一个算法，它是可迭代的，除了可以用.next()还可以用for循环。
+例如以下代码段：
+g = (x * x for x in range(10))
+for n in g:
+    print n
+#现在来查看一下g的类型并迭代输出几个：
+print g
+print g.next()
+print g.next()
+'''
+g_former = (x * x for x in range(10))
+g = (x * x for x in range(10)) 
+for n in g:
+    print n
+#现在来查看一下g的类型并迭代输出几个：
+#print g
+#g.__iter__()
+print g_former.next()
+print g_former.next()
+
+print '''
+上面的代码段涉及到iterator的一些trick
+'''

@@ -881,6 +881,6 @@ def odd():
     yield 3
 
 o = odd()
-print o.next
-print o.next
-print o.next
+print o.next()
+print o.next()
+print o.next()

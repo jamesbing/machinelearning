@@ -884,3 +884,8 @@ o = odd()
 print o.next()
 print o.next()
 print o.next()
+
+print '''
+函数是python内建支持的一种封装。所谓的面向过程的程序设计。
+函数式编程Functional Programming也可以归纳为是面向过程的程序设计，但是其思想更接近数学计算。
+'''

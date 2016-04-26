@@ -2,7 +2,7 @@
 
 from collections import Iterable
 import os
-
+import random
 
 print u'这是一段中文字符'
 print '这也是一段中文字符'
@@ -888,4 +888,35 @@ print o.next()
 print '''
 函数是python内建支持的一种封装。所谓的面向过程的程序设计。
 函数式编程Functional Programming也可以归纳为是面向过程的程序设计，但是其思想更接近数学计算。
+python支持部分函数式编程，而纯的函数式编程语言中的函数是不可以接受参数的。
+函数式编程的一个特点就是，允许把函数本身作为参数传入另一个函数，还允许返回一个函数。
+这种特点就是，python变量可以指向函数。例如内置的abs函数，可以求绝对值。
+例如：
+print abs
 '''
+print abs
+
+print '''
+abs(-10)指的是函数调用，abs指的是函数本身。
+可以让一个变量指向一个函数，并且可以通过这个变量名来调用这个函数。
+例如如下代码：
+testFunction = randint
+print testFunction
+print testFunction(1,10)
+'''
+testFunction = random.randint
+print testFunction
+print testFunction(1,10)
+
+print '''
+由于变量可以指向函数，因此函数也可以作为一个参数传递
+例如:
+def add(x,y,f):
+    return f(x) + f(y)
+当我们调用时：
+add(4,-5,abs)会得到以下结果：
+'''
+def add(x,y,f):
+    return f(x) + f(y)
+result = add(4, -5, abs)
+print result

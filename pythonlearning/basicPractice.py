@@ -1,4 +1,5 @@
 # coding=utf-8
+from collections import Iterable
 print u'这是一段中文字符'
 print '这也是一段中文字符'
 print '测试格式化输出'
@@ -733,3 +734,28 @@ for key in d:
     print key
 for value in d:
     print d[str(value)]
+
+print '''
+如何判断一个对象是否是可迭代的？
+方法时通过collections模块的Iterable类型判断：
+import collections import Iterable
+isinstance('abc', Iterable)
+isinstance(123, Iterable)
+如果是True那么就时可以迭代的
+'''
+print isinstance('abc', Iterable)
+print isinstance(123, Iterable)
+
+print '''
+如果在for里面引用了两个变量：例如如下代码：
+for x, y in [(1,2),(2,4),(5,9)]:
+    print x, y
+testingVector = [(1,2),(2,3)]
+sub_TestingVector = testingVector[0]
+print '[(1,2),(3,4)]的元素的类型是：',type(sub_TestingVector)
+'''
+for x, y in [(1,2),(2,4),(5,9)]:
+    print x, y
+testingVector = [(1,2),(2,3)]
+sub_TestingVector = testingVector[0]
+print '[(1,2),(3,4)]的元素的类型是：',type(sub_TestingVector)

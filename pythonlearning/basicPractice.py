@@ -920,3 +920,87 @@ def add(x,y,f):
     return f(x) + f(y)
 result = add(4, -5, abs)
 print result
+
+print '''
+python内建的filter函数可以用于过滤序列：
+它与map函数类似，map的内容在读完google三大论文之后再研究。
+filter（）接受一个函数和一个序列，并将传入的函数用于每一个元素，
+然后根据返回值是True还是False来决定是保留还是丢弃这个元素。
+例如在一个list中，删掉偶数，只保留奇数：
+def is_odd(n):
+    return n % 2 == 1
+filter(is_odd, [1,5,3,2,4,5,3,6,54,75,63,45,3,5,6,8,5,47,23])
+'''
+def is_odd(n):
+    return n % 2 == 1
+print filter(is_odd, [1,5,3,2,4,5,3,6,54,75,63,45,3,5,6,8,5,47,23])
+
+print '''
+python的sorted函数用来排序
+sorted()函数本身可以对list进行排序，例如：
+print sorted([2,4,3,6,5,1,2,3,5,2,4,5])得到：
+'''
+print sorted([2,4,3,6,5,1,2,3,5,2,4,5])
+
+print '''
+sorted函数本身是一个高阶函数，如果感觉默认的排序算法效率不高，那么
+可以自己写一个排序函数，并且将这个函数传递给sorted函数。例如：
+def reversed(x,y):
+    if x > y:
+        return -1
+    else x < y:
+        return 1
+
+    return 0
+print sorted([2,1,3,6,5,4,7,3,5,2,1,7,8,5], reversed)
+'''
+def reversed(x,y):
+    if x > y:
+        return -1
+    elif x < y:
+        return 1
+
+    return 0
+print sorted([2,1,3,6,5,4,7,3,5,2,1,7,8,5], reversed)
+
+print '''
+有关返回函数：就是将函数作为返回值。
+例如下面的例子：
+def function_return(*args):
+    def sum():
+        total = 0
+        for n in args:
+            total += n
+        return total
+    return sum
+f = function_return(1,2,3,4,5,6,7,8,9)
+f_sub = function_return(1,2,3,4,5,6,7,8,9)
+print f
+print f()
+print f
+print f_sub
+print '两次的函数是否占用相同的内存空间：',f == f_sub
+
+上述代码段的输出为：
+'''
+def function_return(*args):
+    def sum():
+        total = 0
+        for n in args:
+            total += n
+        return total
+    return sum
+f = function_return(1,2,3,4,5,6,7,8,9)
+f_sub = function_return(1,2,3,4,5,6,7,8,9)
+print f
+print f()
+print '现在f函数的内存标志为：',f
+print 'f_sub的内存标志为：',f_sub
+print '两次的函数是否占用相同的内存空间：',f == f_sub
+print '''
+可见，直接将f指向function_return的时候，f指向的是一个函数，并没有真正执行。
+只有当调用f()的时候，其中的内容才会真正执行。当function_function返回给f的时候
+先关参数和变量都已经保存在返回的函数中。这种函数构造方式叫做闭包（Closure）。
+根据后面的代码，f与f_sub并不相同，这说明每次调用，即使传入的参数相同
+它也会返回一个不同的函数闭包。
+'''

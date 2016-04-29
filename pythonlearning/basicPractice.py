@@ -1003,4 +1003,54 @@ print '''
 先关参数和变量都已经保存在返回的函数中。这种函数构造方式叫做闭包（Closure）。
 根据后面的代码，f与f_sub并不相同，这说明每次调用，即使传入的参数相同
 它也会返回一个不同的函数闭包。
+闭包应用中有一个值得注意的地方，那就是，不要试图将函数内会变化的值，例如
+for i in range(x,y)中的i当做返回函数的参数。这样得不到想要的结果，
+例如下面代码：得到的结果不会是1,4,9，原因是返回的函数不会在每次循环时
+就把变量接受存储起来，而是会等到循环结束时统一赋值，而循环结束时，所有的
+i都已经变成了3，所以所有的值也就都成了9.于是，返回的函数不要引用任何
+会发生变化的变量。
+def test_closure():
+    functionList = []
+    for i in range(1,4):
+        def f():
+            return i * i
+        function_list.append(f)
+    return function_list
+f1, f2, f3 = test_closure()
+print f1(), f2(), f3()
 '''
+def test_closure():
+    functionList = []
+    for i in range(1,4):
+        def f():
+            return i * i
+        functionList.append(f)
+    return functionList
+f1, f2, f3 = test_closure()
+print f1(), f2(), f3()
+
+print '''
+如果必须要用这个变化着的量，方法是先给他用不可变的量给固定住：
+def ok_returnFunction():
+    f_l = []
+    for i in range(1,4):
+        def f(j):
+            def g():
+                return j * j
+            return g
+        f_l.append(f(i))
+    return f_l
+f1, f2, f3 = ok_returnFunction()
+print f1(),f2(),f3()
+'''
+def ok_returnFunction():
+    f_l = []
+    for i in range(1,4):
+        def f(j):
+            def g():
+                return j * j
+            return g
+        f_l.append(f(i))
+    return f_l
+f1, f2, f3 = ok_returnFunction()
+print f1(),f2(),f3()

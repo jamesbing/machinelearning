@@ -3,6 +3,10 @@
 from collections import Iterable
 import os
 import random
+import time
+import functools
+
+ISOTIMEFORMAT = "%Y-%m-%d %X"
 
 print u'这是一段中文字符'
 print '这也是一段中文字符'
@@ -1054,3 +1058,129 @@ def ok_returnFunction():
     return f_l
 f1, f2, f3 = ok_returnFunction()
 print f1(),f2(),f3()
+
+print '''
+关于Lambda表达式：
+匿名函数可用关键字lambda来指明，它要遵循以下限制：
+只能有一个表达式，不需要写return，返回值就是该表达式的值
+lambda表达式不用担心函数名冲突，而且可以将匿名函数赋值给一个变量，
+再利用该变量来调用该函数：
+f = lambda x, y, z: x + y * z
+print f
+print f(2,4,6)
+上述代码段的结果为：
+'''
+f = lambda x, y, z: x + y * z
+print f
+print f(2,4,6)
+
+print '''
+在函数的使用中，会遇到这种情况：那就是在函数调用前后再多做一些
+比原来的函数定义更多的事情，但是又不去修改原来的函数定义。
+这就需要用到“装饰器”这一概念（Decorator），这种机制可以在运行代码期间
+动态增加功能。强化一个概念：函数在python中也是一个对象。
+实际上，decorator就是一个返回函数的高阶函数。
+我们有个函数叫做输出现在的时间：
+def now():
+    print time.strftime(ISOTIMEFORMAT, time.localtime(time.time()))
+现在有这样一个需求：在调用now函数之前，先打印"现在是北京时间："
+在调用now函数之后打印："该时间由以下函数提供："now的函数名。
+现在需要借助python的@语法，写出以下代码:
+
+@log
+def now():
+    print time.strftime(ISOTIMEFORMAT, time.localtime(time.time()))
+
+def log(f):
+    def dogger(*args, **kw):
+        print '现在是北京时间:'
+        f(*args, **kw)
+        print '该时间由以下函数提供：%s' % f.__name__
+        return
+    return dogger
+
+now()
+'''
+def log(f):
+    def dogger(*args, **kw):
+        print '现在是北京时间:'
+        f(*args, **kw)
+        print '该时间由以下函数提供：%s' % f.__name__
+    return dogger
+
+@log
+def now():
+    print time.strftime(ISOTIMEFORMAT, time.localtime(time.time()))
+now()
+
+print '''
+上述代码写了@log之后，再调用log就相当于now = log(now)
+因此如果decorator本身也需要传入参数，那么就需要编写一个返回decorator的高阶函数：
+def log2(text1, text2):
+    def decorator(function):
+        def wrapper(*args, **kw)
+            print '%s' % text1
+            function(*args, **kw)
+            print '%s' % text2, function.__name__
+        return wrapper
+    return decorator
+@log2('自带参数的报时器：现在是：','该结果由该函数提供：')
+def now2():
+    print time.strftime(ISOTIMEFORMAT, time.localtime(time.time()))
+
+上面代码段的执行效果等同于：now2 = log('...','///')(now)
+'''
+def log2(text1, text2):
+    def decorator(function):
+        def wrapper(*args, **kw):
+            print '%s' % text1
+            function(*args, **kw)
+            print '%s' % text2, function.__name__
+        return wrapper
+    return decorator
+@log2('自带参数的报时器：现在是：','该结果由该函数提供：')
+def now2():
+    print time.strftime(ISOTIMEFORMAT, time.localtime(time.time()))
+now2()
+
+print '''
+现在来查看now2函数的name属性：
+print now2.__name__:
+'''
+
+print now2.__name__
+
+print '''
+可见函数名已经改变了。如果不想改变，要在包裹目标函数的最内层代码段之前加上：
+@functools.wraps(函数名)即可，当然需要引入functools模块
+更改例子：
+
+def log3(text1, text2):
+    def decorator(function):
+        @functools.wraps(function)
+        def wrapper(*args, **kw):
+            print '%s' % text1
+            function(*args, **kw)
+            print '%s' % text2, function.__name__
+        return wrapper
+    return decorator
+@log3('自带参数的报时器：现在是：','该结果由该函数提供：')
+def now3():
+    print time.strftime(ISOTIMEFORMAT, time.localtime(time.time()))
+now3()
+print '可以发现现在的函数名应该是不变的了：',now3.__name__
+'''
+def log3(text1, text2):
+    def decorator(function):
+        @functools.wraps(function)
+        def wrapper(*args, **kw):
+            print '%s' % text1
+            function(*args, **kw)
+            print '%s' % text2, function.__name__
+        return wrapper
+    return decorator
+@log3('自带参数的报时器：现在是：','该结果由该函数提供：')
+def now3():
+    print time.strftime(ISOTIMEFORMAT, time.localtime(time.time()))
+now3()
+print '可以发现现在的函数名应该是不变的了：',now3.__name__

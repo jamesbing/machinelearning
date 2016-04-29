@@ -1184,3 +1184,39 @@ def now3():
     print time.strftime(ISOTIMEFORMAT, time.localtime(time.time()))
 now3()
 print '可以发现现在的函数名应该是不变的了：',now3.__name__
+
+print '''
+偏函数：partial function这个偏函数和导数的那个偏函数不太一样
+偏函数也可以做到：降低函数调用难度的作用。
+先看个例子：
+print int('1234')
+print int('1234',8)
+print int('1234',16)
+print int('010001001',2)
+他们的结果分别是：
+'''
+
+print int('1234')
+print int('1234',8)
+print int('1234',16)
+print int('010001001',2)
+
+print '''
+现在不想在每次调用时都要去像上面一样，而是想自己定义一个int2函数，就直接是
+二进制的数字转换成十进制数字的转换。于是，可以利用functools工具
+int2 = functools.partial(int,base=2)
+于是int2就可以自动利用以前有的函数传值，然后按需计算了，给程序设计带来极大便利。
+print int2('10001000')
+'''
+int2 = functools.partial(int,base=2)
+print int2('10001000')
+print '''
+partial的作用就是：把一些函数的某些参数固定住，形成一个新的函数。
+其实就等于一些函数设计的时候不能将某个变量写成默认值，但是有些部分
+可以将其中的某些值固定住，所以就用partial生成一个新的函数。
+而且新的函数还是可以继续把某些参数穿进去的，就又成了别的样子：
+例如上面的例子中,如果这么用：
+int2('10001000',base = 10),那么结果会是：
+'''
+print int2('10001000',base = 10)
+

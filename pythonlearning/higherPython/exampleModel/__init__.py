@@ -6,6 +6,7 @@
 __author__='James Leng' #这个位置用于标识作者，开源软件中，此处相当于是我自己的签名
 
 import sys
+import json #python >= 2.6
 
 def test():
     args = sys.argv

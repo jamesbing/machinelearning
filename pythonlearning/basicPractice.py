@@ -5,6 +5,7 @@ import os
 import random
 import time
 import functools
+import types
 
 ISOTIMEFORMAT = "%Y-%m-%d %X"
 
@@ -1224,3 +1225,19 @@ print '''
 这个python文件可能到这里就要结束了。因为接下来就要学习模块的概念了。
 模块的概念就是整体拆分，以提交可用性和可维护性。
 '''
+
+print '有关变量类型：','type(int) == type(str) == types.TypeType的结果是：'
+print type(int) == type(str) == types.TypeType
+
+print '''
+有关isinstance的使用：isinstance(/'abc/',(str,unicode))
+isinstance(u'a',baseString)的结果是：
+'''
+print isinstance('abc',(str,unicode))
+print isinstance(u'a',basestring)
+
+print '''
+dir()函数可用于查看某个类所有的属性和方法：
+例如dir('ABC')：
+'''
+print dir('ABC')

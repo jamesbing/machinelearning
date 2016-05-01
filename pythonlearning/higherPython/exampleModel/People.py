@@ -63,3 +63,4 @@ print xiaohong._People__age
 '''
 print xiaohong._People__age
 xiaohong.get_info()
+print type(xiaohong)

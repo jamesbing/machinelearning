@@ -22,7 +22,7 @@ function [SuccRatioTr,SuccRatioTe] = RFTest(ResName,NumTree)
         CId = CIdTr(loop1);
 
         % 随机森林给出分类结果
-        preLabel = testRF(Sample, binTree, NumClass, NumTree);
+        preLabel = getTheLabel(Sample, binTree, NumClass, NumTree);
         if size(preLabel, 2) > 1
             ind = find(preLabel == CId);
             if isscalar(ind)
@@ -75,7 +75,7 @@ function [SuccRatioTr,SuccRatioTe] = RFTest(ResName,NumTree)
         
         % 随机森林给出分类结果
 
-        preLabel = testRF(Sample, binTree, NumClass, NumTree);
+        preLabel = getTheLabel(Sample, binTree, NumClass, NumTree);
  
         if size(preLabel, 2) > 1
             ind = find(preLabel == CId);

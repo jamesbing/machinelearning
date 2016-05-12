@@ -124,7 +124,7 @@ function preLabel = getTheLabel(sample,binTree,ClassNum,TreeNum)
     % 初始化参数
     ResVec = zeros(1, ClassNum);
     while  ratioMS < 100 / 50 && maxTime > 0
-        fprintf('目前正误比为 %f\n，因此不达标，需要重新算...', ratioMS);
+        fprintf(' %f\n', mean(localRatio));
         %这一块是新加入的：start
         %原数组a[]，假设是一维的。取n个元素。
         rand=randperm(length(binTree));

@@ -121,16 +121,17 @@ function preLabel = getTheLabel(sample,binTree,ClassNum,TreeNum)
     maxTime = 5;
     ratioMS = 0;
     maxTrees = 250;
+    purposeRatio = 100 / 20;
     % 初始化参数
     ResVec = zeros(1, ClassNum);
-    while  ratioMS < 100 / 50 && maxTime > 0
+    while  (ratioMS < purposeRatio && maxTime > 0)
         fprintf('目前正误比为 %f\n，因此不达标，需要重新算...', ratioMS);
         %这一块是新加入的：start
         %原数组a[]，假设是一维的。取n个元素。
-        rand=randperm(length(binTree));
-        index=rand(1:maxTrees);
-        index=sort(index);
-        binTree=binTree(index);
+        rand = randperm(length(binTree));
+        index = rand(1:maxTrees);
+        index = sort(index);
+        binTree = binTree(index);
         %这一块是新加入的：end
         ResVec = testRF(sample, binTree, ClassNum, TreeNum);
         ResVec2nd = ResVec;

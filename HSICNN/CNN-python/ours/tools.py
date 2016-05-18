@@ -2,7 +2,7 @@
 # coding=utf-8
 
 import scipy.io as sio
-import numpy as np
+import numpy
 
 import theano
 import theano.tensor as T
@@ -37,11 +37,13 @@ def load_data(dataset_path):
         data_x, data_y = data_xy
 #        print (data_x)
 #        print (data_y)
-        shared_x = theano.shared(value = np.asarray(data_x,
-                                              dtype='float64'))
-        shared_y = theano.shared(value = np.asarray(data_y,
-                                              dtype='float64'))
-        return shared_x, T.cast(shared_y, 'int32')
+        shared_x = theano.shared(value = numpy.asarray(data_x,
+                                              dtype=theano.config.floatX),
+                                borrow = borrow)
+        shared_y = theano.shared(value = numpy.asarray(data_y,
+                                              dtype='int32'),
+                                borrow = borrow)
+        return shared_x, shared_y
     #the end of the defination of inside fucntion
 
     test_set_x, test_set_y = shared_dataset(test_set)

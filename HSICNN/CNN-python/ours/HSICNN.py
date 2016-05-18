@@ -117,11 +117,19 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     rng = numpy.random.RandomState(23455)
 
     datasets = t.load_data(dataset)
-
+#    datasets = T.TensorType('float64',datasets)
     train_set_x, train_set_y = datasets[0]
+#    print (train_set_x[0])
+#    train_set_x = T.TensorType('float64', train_set_x)
+#    train_set_y = T.TensorType('float64', train_set_y)
     valid_set_x, valid_set_y = datasets[1]
+#   valid_set_x = T.TensorType('float64', valid_set_x)
+#   valid_set_y = T.TensorType('float64', valid_set_y)
     test_set_x, test_set_y = datasets[2]
-
+#    test_set_x = T.TensorType('float64',test_set_x)
+#    test_set_y = T.TensorType('float64',test_set_y)
+#    print (train_set_x[0][0])
+#    print (train_set_y)
 
     # compute number of minibatches for training, validation and testing
     n_train_batches = train_set_x.get_value(borrow=True).shape[0]

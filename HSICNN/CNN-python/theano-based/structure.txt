@@ -1,0 +1,12 @@
+1
+176
+1
+30
+21
+5
+<class 'layer.ConvPoolLayer'>
+2
+100
+<class 'layer.FullLayer'>
+14
+<class 'layer.SoftmaxLayer'>

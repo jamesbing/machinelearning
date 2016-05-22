@@ -89,7 +89,7 @@ def buildMode(train_set_x, train_set_y, valid_set_x, valid_set_y, test_set_x, te
 def train(bcontinue_train=False, params_fileName='params.mat', structure_fileName='structure.txt', learning_rate=0.01, batch_size=9, n_epochs=1000000):#8*11*17 = 1496, 3*12*41 = 1476
     #'U_PaviaReducedData1960_10.mat', 'VegetationReducedData1500_10.mat', 'PaviaU_ReducedData.mat', 'Indian_pines_ReducedData_200_9.mat', 'Salinas_ReducedData_200_16.mat', 'Salinas_ReducedData_600_16.mat'
     #'U_PaviaReducedData1960_10.mat', 'PaviaU_ReducedData.mat', 'Salinas_ReducedData_200_16.mat'
-    datasets = tool.loadData('newKSC1N.mat', -1, False)
+    datasets = tool.loadData('newKSC1N4.mat', -1, False)
     train_set_x, train_set_y = datasets[0]
     valid_set_x, valid_set_y = datasets[1]
     test_set_x, test_set_y = datasets[2]

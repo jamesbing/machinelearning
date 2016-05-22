@@ -69,7 +69,7 @@ def loadData(dataFile, typeId = -1):
     return test_set_x, test_set_y
 
 if __name__ == '__main__':
-    test_set_x, test_set_y = tool.loadData('newKSC4N.mat', -1)[2]
+    test_set_x, test_set_y = tool.loadData('newKSC1N4.mat', -1)[2]
     test_set_x = test_set_x.get_value()
     test_set_y = test_set_y.get_value()
     inputNodes = test_set_x.shape[1]

@@ -1,55 +1,42 @@
+"""This tutorial introduces the LeNet5 neural network architecture
+using Theano.  LeNet5 is a convolutional neural network, good for
+classifying images. This tutorial shows how to build the architecture,
+and comes with all the hyper-parameters you need to reproduce the
+paper's MNIST results.
+
+
+This implementation simplifies the model in the following ways:
+
+ - LeNetConvPool doesn't implement location-specific gain and bias parameters
+ - LeNetConvPool doesn't implement pooling by average, it implements pooling
+   by max.
+ - Digit classification is implemented with a logistic regression rather than
+   an RBF network
+ - LeNet5 was not fully-connected convolutions at second layer
+
+References:
+ - Y. LeCun, L. Bottou, Y. Bengio and P. Haffner:
+   Gradient-Based Learning Applied to Document
+   Recognition, Proceedings of the IEEE, 86(11):2278-2324, November 1998.
+   http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf
+
+"""
 
 from __future__ import print_function
 
 import os
 import sys
 import timeit
-import numpy
 
-import scipy.io as sio
+import numpy
 
 import theano
 import theano.tensor as T
 from theano.tensor.signal import downsample
 from theano.tensor.nnet import conv2d
 
-from logistic_sgd import LogisticRegression
+from logistic_sgd import LogisticRegression, load_data
 from mlp import HiddenLayer
-import math
-
-
-class SoftmaxLayer(object):
-
-    def __init__(self, rng, input, n_in, n_out, W=None, b=None):
-        if W == None:
-            self.W = theano.shared(value=numpy.asarray(rng.uniform(low =-numpy.sqrt(6. / (n_in + n_out)), 
-                                                                   high=+numpy.sqrt(6. / (n_in + n_out)), 
-                                                                   size=(n_in, n_out)), 
-                                                       dtype=theano.config.floatX), 
-                                   name='W', borrow=True)
-        else:
-            self.W = theano.shared(W, name='W', borrow=False)
-        if b == None:
-            self.b = theano.shared(value=numpy.zeros((n_out,),
-                                                     dtype=theano.config.floatX),
-                                   name='b', borrow=True)
-        else:
-            self.b = theano.shared(b, name='b', borrow=False)
-        self.output = T.nnet.softmax(T.dot(input, self.W) + self.b)
-        self.y_pred = T.argmax(self.output, axis=1)
-        self.params = [self.W, self.b]
-
-    def negative_log_likelihood(self, y):
-        return -T.mean(T.log(self.output)[T.arange(y.shape[0]), y]) # + lambda / 2.0 * T.dot(self.W, self.W) / self.W.shape[0] / self.W.shape[1]
-
-    def errors(self, y):
-        if y.ndim != self.y_pred.ndim:
-            raise TypeError('y should have the same shape as self.y_pred',
-                ('y', target.type, 'y_pred', self.y_pred.type))
-        if y.dtype.startswith('int'):
-            return T.mean(T.neq(self.y_pred, y))
-        else:
-            raise NotImplementedError()
 
 
 class LeNetConvPoolLayer(object):
@@ -131,7 +118,7 @@ class LeNetConvPoolLayer(object):
 
 
 def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
-                    dataset='newKSC1N4.mat',
+                    dataset='mnist.pkl.gz',
                     nkerns=[20, 50], batch_size=500):
     """ Demonstrates lenet on MNIST dataset
 
@@ -151,7 +138,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
 
     rng = numpy.random.RandomState(23455)
 
-    datasets = loadHSIData(dataset)
+    datasets = load_data(dataset)
 
     train_set_x, train_set_y = datasets[0]
     valid_set_x, valid_set_y = datasets[1]
@@ -183,61 +170,57 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     # Reshape matrix of rasterized images of shape (batch_size, 28 * 28)
     # to a 4D tensor, compatible with our LeNetConvPoolLayer
     # (28, 28) is the size of MNIST images.
-    spectralLength = len(train_set_x.get_value()[0])
-    layer0_input = x.reshape((batch_size, 1, 1, spectralLength))
+    layer0_input = x.reshape((batch_size, 1, 28, 28))
 
     # Construct the first convolutional pooling layer:
     # filtering reduces the image size to (28-5+1 , 28-5+1) = (24, 24)
     # maxpooling reduces this further to (24/2, 24/2) = (12, 12)
     # 4D output tensor is thus of shape (batch_size, nkerns[0], 12, 12)
-    n3 = 40
-    con_kernel_size = math.ceil(spectralLength / 9)
-    max_pool_size = math.ceil((spectralLength - con_kernel_size + 1) / n3)
-    HSI_Classes = train_set_y.get_value().max() + 1
     layer0 = LeNetConvPoolLayer(
         rng,
         input=layer0_input,
-        image_shape=(batch_size, 1, 1, spectralLength),
-        filter_shape=(20, 1, 1, con_kernel_size * 5),
-        poolsize=(1, int(max_pool_size)) 
+        image_shape=(batch_size, 1, 28, 28),
+        filter_shape=(nkerns[0], 1, 5, 5),
+        poolsize=(2, 2)
     )
 
     # Construct the second convolutional pooling layer
     # filtering reduces the image size to (12-5+1, 12-5+1) = (8, 8)
     # maxpooling reduces this further to (8/2, 8/2) = (4, 4)
     # 4D output tensor is thus of shape (batch_size, nkerns[1], 4, 4)
-#    layer1 = LeNetConvPoolLayer(
-#        rng,
-#        input=layer0.output,
-#        image_shape=(batch_size, nkerns[0], 12, 12),
-#        filter_shape=(nkerns[1], nkerns[0], 5, 5),
-#        poolsize=(2, 2)
-#    )
+    layer1 = LeNetConvPoolLayer(
+        rng,
+        input=layer0.output,
+        image_shape=(batch_size, nkerns[0], 12, 12),
+        filter_shape=(nkerns[1], nkerns[0], 5, 5),
+        poolsize=(2, 2)
+    )
 
     # the HiddenLayer being fully-connected, it operates on 2D matrices of
     # shape (batch_size, num_pixels) (i.e matrix of rasterized images).
     # This will generate a matrix of shape (batch_size, nkerns[1] * 4 * 4),
     # or (500, 50 * 4 * 4) = (500, 800) with the default values.
-    layer1_input = layer0.output.flatten(2)
+    layer2_input = layer1.output.flatten(2)
 
     # construct a fully-connected sigmoidal layer
-    layer1 = HiddenLayer(
+    layer2 = HiddenLayer(
         rng,
-        input=layer1_input,
-        n_in=20 * 1 * 40,
-        n_out=100,
+        input=layer2_input,
+        n_in=nkerns[1] * 4 * 4,
+        n_out=500,
+        activation=T.tanh
     )
 
     # classify the values of the fully-connected sigmoidal layer
-    layer2 = LogisticRegression(input=layer1.output, n_in=100, n_out=HSI_Classes)
+    layer3 = LogisticRegression(input=layer2.output, n_in=500, n_out=10)
 
     # the cost we minimize during training is the NLL of the model
-    cost = layer2.negative_log_likelihood(y)
+    cost = layer3.negative_log_likelihood(y)
 
     # create a function to compute the mistakes that are made by the model
     test_model = theano.function(
         [index],
-        layer2.errors(y),
+        layer3.errors(y),
         givens={
             x: test_set_x[index * batch_size: (index + 1) * batch_size],
             y: test_set_y[index * batch_size: (index + 1) * batch_size]
@@ -246,7 +229,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
 
     validate_model = theano.function(
         [index],
-        layer2.errors(y),
+        layer3.errors(y),
         givens={
             x: valid_set_x[index * batch_size: (index + 1) * batch_size],
             y: valid_set_y[index * batch_size: (index + 1) * batch_size]
@@ -254,7 +237,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     )
 
     # create a list of all model parameters to be fit by gradient descent
-    params = layer2.params + layer1.params + layer0.params
+    params = layer3.params + layer2.params + layer1.params + layer0.params
 
     # create a list of gradients for all model parameters
     grads = T.grad(cost, params)
@@ -359,39 +342,6 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     print(('The code for file ' +
            os.path.split(__file__)[1] +
            ' ran for %.2fm' % ((end_time - start_time) / 60.)), file=sys.stderr)
-
-#def loadHSIData(dataPath):
-
-def loadHSIData(dataFile, typeId = -1, bShowData = False):
-    data = sio.loadmat(dataFile)
-
-    train_data = data['DataTr']
-    train_label = data['CIdTr'][0,:]
-#    train_label = train_label[0,:]
-#    return train_data,train_label
-    train_set = [train_data, train_label]
-
-    test_data = data['DataTe']
-    test_label = data['CIdTe'][0,:]
-    test_set = [test_data, test_label]
-
-    valid_data = data['DataVa']
-    valid_label = data['CIdVa'][0,:]
-    valid_set = [valid_data, valid_label]
-
-    def shared_dataset(data_xy, borrow=True):
-        data_x, data_y = data_xy
-        shared_x = theano.shared(numpy.asarray(data_x,dtype=theano.config.floatX))
-        shared_y = theano.shared(numpy.asarray(data_y,dtype='int32'))
-        return shared_x, shared_y
-
-    test_set_x, test_set_y = shared_dataset(test_set)
-    valid_set_x, valid_set_y = shared_dataset(valid_set)
-    train_set_x, train_set_y = shared_dataset(train_set)
-
-    rval = [(train_set_x, train_set_y), (valid_set_x, valid_set_y), (test_set_x, test_set_y)]
-    return rval
-
 
 if __name__ == '__main__':
     evaluate_lenet5()

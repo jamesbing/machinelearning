@@ -112,7 +112,7 @@ class LeNetConvPoolLayer(object):
         # reshape it to a tensor of shape (1, n_filters, 1, 1). Each bias will
         # thus be broadcasted across mini-batches and feature map
         # width & height
-        self.output = T.tanh(pooled_out + self.b.dimshuffle('x', 0, 'x', 'x'))
+        self.output = T.tanh(conv_out + self.b.dimshuffle('x', 0, 'x', 'x'))
 
         # store parameters of this layer
         self.params = [self.W, self.b]
@@ -139,7 +139,6 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     :type nkerns: list of ints
     :param nkerns: number of kernels on each layer
     """
-
     rng = numpy.random.RandomState(23455)
 
     datasets = tool.loadData(dataset)

@@ -15,6 +15,7 @@ from theano.tensor.nnet import conv2d
 
 from logistic_sgd import LogisticRegression
 from mlp import HiddenLayer
+import math
 
 
 class SoftmaxLayer(object):
@@ -189,12 +190,16 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     # filtering reduces the image size to (28-5+1 , 28-5+1) = (24, 24)
     # maxpooling reduces this further to (24/2, 24/2) = (12, 12)
     # 4D output tensor is thus of shape (batch_size, nkerns[0], 12, 12)
+    n3 = 40
+    con_kernel_size = math.ceil(spectralLength / 9)
+    max_pool_size = math.ceil((spectralLength - con_kernel_size + 1) / n3)
+    HSI_Classes = train_set_y.get_value().max() + 1
     layer0 = LeNetConvPoolLayer(
         rng,
         input=layer0_input,
         image_shape=(batch_size, 1, 1, spectralLength),
-        filter_shape=(nkerns[0], 1, 1, 5),
-        poolsize=(1, 1)
+        filter_shape=(20, 1, 1, con_kernel_size * 5),
+        poolsize=(1, int(max_pool_size)) 
     )
 
     # Construct the second convolutional pooling layer
@@ -219,20 +224,20 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     layer1 = HiddenLayer(
         rng,
         input=layer1_input,
-        n_in=nkerns[1] * 4 * 4,
+        n_in=20 * 1 * 40,
         n_out=100,
     )
 
     # classify the values of the fully-connected sigmoidal layer
-    layer3 = LogisticRegression(input=layer2.output, n_in=500, n_out=10)
+    layer2 = LogisticRegression(input=layer1.output, n_in=100, n_out=HSI_Classes)
 
     # the cost we minimize during training is the NLL of the model
-    cost = layer3.negative_log_likelihood(y)
+    cost = layer2.negative_log_likelihood(y)
 
     # create a function to compute the mistakes that are made by the model
     test_model = theano.function(
         [index],
-        layer3.errors(y),
+        layer2.errors(y),
         givens={
             x: test_set_x[index * batch_size: (index + 1) * batch_size],
             y: test_set_y[index * batch_size: (index + 1) * batch_size]
@@ -241,7 +246,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
 
     validate_model = theano.function(
         [index],
-        layer3.errors(y),
+        layer2.errors(y),
         givens={
             x: valid_set_x[index * batch_size: (index + 1) * batch_size],
             y: valid_set_y[index * batch_size: (index + 1) * batch_size]
@@ -249,7 +254,7 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     )
 
     # create a list of all model parameters to be fit by gradient descent
-    params = layer3.params + layer2.params + layer1.params + layer0.params
+    params = layer2.params + layer1.params + layer0.params
 
     # create a list of gradients for all model parameters
     grads = T.grad(cost, params)

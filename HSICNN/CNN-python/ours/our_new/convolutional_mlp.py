@@ -123,7 +123,7 @@ class LeNetConvPoolLayer(object):
 
 def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
                     dataset='newKSC1N4.mat',
-                    nkerns=[20, 50], batch_size=500):
+                    nkerns=[20, 50], batch_size=9):
     """ Demonstrates lenet on MNIST dataset
 
     :type learning_rate: float
@@ -174,13 +174,21 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
     # Reshape matrix of rasterized images of shape (batch_size, 28 * 28)
     # to a 4D tensor, compatible with our LeNetConvPoolLayer
     # (28, 28) is the size of MNIST images.
+    
     spectralBands = train_set_x.get_value(borrow=True).shape[1]
+    n1 = spectralBands
 #    neighbor = 5
+    step = 5
     layer0_input = x.reshape((batch_size, 1, spectralBands, 1))
-    kernelSize = math.ceil(spectralBands / 9)
+#    kernelSize = math.ceil(spectralBands / 9) * 5
+    k1 = (math.ceil(spectralBands / step / batch_size)) * step
     n3 = 40
-    poolKernelSize = math.ceil((spectralBands - kernelSize + 1) / n3)
+    n2 = (n1 - k1)/step + 1
+#    k2 = math.ceil((spectralBands - k1 + 1) / n3)
+    k2 = math.ceil(n2/n3)
     classNumber = train_set_y.get_value(borrow = True).max() + 1
+    n5 = classNumber
+    n4 = 100
     # Construct the first convolutional pooling layer:
     # filtering reduces the image size to (28-5+1 , 28-5+1) = (24, 24)
     # maxpooling reduces this further to (24/2, 24/2) = (12, 12)
@@ -189,8 +197,8 @@ def evaluate_lenet5(learning_rate=0.1, n_epochs=200,
         rng,
         input=layer0_input,
         image_shape=(batch_size, 1, spectralBands, 1),
-        filter_shape=(20, 1, kernelSize, 1),
-        poolsize=(int(poolKernelSize), 1)
+        filter_shape=(20, 1, k1, 1),
+        poolsize=(int(k2), 1)
     )
 
     # Construct the second convolutional pooling layer

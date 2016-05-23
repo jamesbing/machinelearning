@@ -32,7 +32,7 @@ def buildMode(train_set_x, train_set_y, valid_set_x, valid_set_y, test_set_x, te
         if bcontinue_train:
             layeri = convLayers[i](rng=rng, input=input, 
                                    image_shape=(batch_size, kernels, inputNodes, convDims == 2 and inputNodes or 1), 
-                                   filter_shape=(convKernels[i], kernels, convFilters[i], convDims == 2 and convFilters[i] or 1), 
+                                   filter_shape=(convKernels[i], kernels, convFilters[i], (convDims == 2 and convFilters[i] or 1)*5), 
                                    pool_shape=(convPools[i], convDims == 2 and convPools[i] or 1), 
                                    W=previous_params[2*i], b=previous_params[2*i+1][0,:])
         else:
